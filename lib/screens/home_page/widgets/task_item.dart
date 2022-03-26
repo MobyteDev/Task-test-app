@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/business_logic/bloc/task_bloc.dart';
 import 'package:todo_list/data/task_model.dart';
+import 'package:todo_list/resources/app_colors.dart';
 import 'package:todo_list/widgets/delete_confirm_dialog.dart';
 import 'package:todo_list/widgets/show_adaptive_dialog.dart';
 import 'package:todo_list/widgets/text_field_dialog.dart';
@@ -15,9 +16,14 @@ class TaskItem extends StatelessWidget {
     var checked = taskModel.isCompleted;
     return CheckboxListTile(
       key: ValueKey(taskModel.id),
-      activeColor: Colors.green,
+      activeColor: AppColors.completedBoxColor,
       controlAffinity: ListTileControlAffinity.leading,
-      title: Text(taskModel.name),
+      title: Text(
+        taskModel.name,
+        style: TextStyle(
+          color: checked ? AppColors.completedTextColor : AppColors.defaultTextColor,
+        ),
+      ),
       value: checked,
       secondary: SizedBox(
         width: 100,
@@ -25,7 +31,7 @@ class TaskItem extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () async {
-                showAdaptiveDialog(
+                await showAdaptiveDialog(
                   context: context,
                   builder: (_) {
                     return AdaptiveTextFieldDialog(
@@ -36,7 +42,7 @@ class TaskItem extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.edit,
-                color: Colors.grey,
+                color: AppColors.editColor,
               ),
             ),
             IconButton(
@@ -55,13 +61,13 @@ class TaskItem extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.delete,
-                color: Colors.red,
+                color: AppColors.errorColor,
               ),
             ),
           ],
         ),
       ),
-      onChanged: (newval) {
+      onChanged: (_) {
         BlocProvider.of<TaskBloc>(context)
             .add(ToggleCompletionEvent(taskModel.id));
       },

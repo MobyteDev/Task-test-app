@@ -83,7 +83,7 @@ class _AdaptiveTextFieldDialogState extends State<AdaptiveTextFieldDialog> {
               decoration: InputDecoration(errorText: errorText),
             ),
       actions: [
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             if (controller.text.isNotEmpty) {
               if (edit) {
@@ -103,7 +103,13 @@ class _AdaptiveTextFieldDialogState extends State<AdaptiveTextFieldDialog> {
               });
             }
           },
-          child: Text(edit ? AppStrings.edit : AppStrings.add),
+          child: const Text(AppStrings.done),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text(AppStrings.cancel),
         ),
       ],
     );

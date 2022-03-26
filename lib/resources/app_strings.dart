@@ -1,4 +1,5 @@
 class AppStrings {
+  AppStrings._();
   static const todoList = "TODO list";
   static const areYouSure = "Are you sure?";
   static const willBeDeleted = "will be deleted";
@@ -9,4 +10,6 @@ class AppStrings {
   static const edit = "Edit task";
   static const error = 'Field must not be empty';
   static const noTask = 'No tasks yet';
+  static const done = 'Done';
+  static const cancel = 'Cancel';
 }
