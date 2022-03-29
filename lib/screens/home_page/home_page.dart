@@ -12,13 +12,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(AppStrings.todoList),
-        ),
-        body: Align(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(AppStrings.todoList),
+      ),
+      body: SafeArea(
+        child: Align(
           alignment: Alignment.center,
           child: Column(
             children: [
