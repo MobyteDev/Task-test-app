@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/business_logic/bloc/task_bloc.dart';
@@ -17,7 +18,15 @@ class _TextFieldDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (kIsWeb) {
+      return AlertDialog(
+        content: content,
+        contentPadding: const EdgeInsets.all(20),
+        title: title,
+        actions: actions,
+      );
+    }
+    else if (Platform.isIOS) {
       return CupertinoAlertDialog(
         content: content,
         title: title,
@@ -68,7 +77,15 @@ class _AdaptiveTextFieldDialogState extends State<AdaptiveTextFieldDialog> {
     final edit = widget.task != null;
     return _TextFieldDialog(
       title: Text(edit ? AppStrings.edit : AppStrings.add),
-      content: Platform.isIOS
+      content: kIsWeb 
+      ? TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              focusNode: focusNode,
+              controller: controller,
+              decoration: InputDecoration(errorText: errorText),
+            )
+      : Platform.isIOS
           ? CupertinoTextField(
               keyboardType: TextInputType.multiline,
               maxLines: null,

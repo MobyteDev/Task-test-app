@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<T?> showAdaptiveDialog<T>({
@@ -8,7 +9,14 @@ Future<T?> showAdaptiveDialog<T>({
   bool barrierDismissible = true,
   required Widget Function(BuildContext) builder,
 }) {
-  if (Platform.isIOS) {
+  if (kIsWeb){
+    return showDialog<T>(
+      barrierDismissible: barrierDismissible,
+      context: context,
+      builder: builder,
+    );
+  }
+  else if (Platform.isIOS) {
     return showCupertinoDialog<T>(
       barrierDismissible: barrierDismissible,
       context: context,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/resources/app_strings.dart';
 
@@ -14,7 +15,15 @@ class _DeleteConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (kIsWeb){
+      return AlertDialog(
+        actions: actions,
+        title: title,
+        content: content,
+        contentPadding: const EdgeInsets.all(20),
+      );
+    }
+    else if (Platform.isIOS) {
       return CupertinoAlertDialog(
         content: content,
         title: title,
