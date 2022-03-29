@@ -12,48 +12,50 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(AppStrings.todoList),
-      ),
-      body: Align(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            Expanded(
-              child: BlocBuilder<TaskBloc, TaskState>(
-                builder: (context, state) {
-                  final isEmpty = TaskRepository.tasks.isEmpty;
-                  if (isEmpty) {
-                    return const Center(child: Text(AppStrings.noTask));
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: ListView.builder(
-                      itemCount: TaskRepository.tasks.length,
-                      itemBuilder: (ctx, index) {
-                        return TaskItem(
-                          taskModel: TaskRepository.tasks[index],
-                        );
-                      },
-                    ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(AppStrings.todoList),
+        ),
+        body: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<TaskBloc, TaskState>(
+                  builder: (context, state) {
+                    final isEmpty = TaskRepository.tasks.isEmpty;
+                    if (isEmpty) {
+                      return const Center(child: Text(AppStrings.noTask));
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: ListView.builder(
+                        itemCount: TaskRepository.tasks.length,
+                        itemBuilder: (ctx, index) {
+                          return TaskItem(
+                            taskModel: TaskRepository.tasks[index],
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  showAdaptiveDialog(
+                    context: context,
+                    builder: (_) {
+                      return const AdaptiveTextFieldDialog();
+                    },
                   );
                 },
+                child: const Text(AppStrings.add),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showAdaptiveDialog(
-                  context: context,
-                  builder: (_) {
-                    return const AdaptiveTextFieldDialog();
-                  },
-                );
-              },
-              child: const Text(AppStrings.add),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
